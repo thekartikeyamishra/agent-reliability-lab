@@ -1,101 +1,108 @@
 {
   "schemaVersion": 1,
-  "id": "lumen-dental-demo",
-  "name": "Lumen Dental Studio",
-  "category": "dental clinic",
-  "website": "https://example.com/lumen-dental-demo",
+  "id": "truesource-ai",
+  "name": "TrueSource AI",
+  "category": "website growth and AI-visibility audit platform (online service)",
+  "website": "https://truesourceai.me",
   "sourceUrls": [
-    "https://example.com/lumen-dental-demo"
+    "https://truesourceai.me/pricing.html"
   ],
   "verifiedOn": "2026-11-09",
   "currency": "INR",
   "services": [
     {
-      "id": "cleaning",
-      "name": "Teeth Cleaning & Polishing",
+      "id": "free-audit",
+      "name": "Free Website Growth Audit",
       "aliases": [
-        "cleaning",
-        "scaling"
+        "free audit",
+        "free scan",
+        "growth score",
+        "website audit"
       ],
-      "price": 1200,
-      "priceText": "₹1,200",
-      "durationMin": 45
+      "price": 0,
+      "priceText": "Free",
+      "description": "Instant Growth Score and prioritised fixes for one website; no signup needed."
     },
     {
-      "id": "consultation",
-      "name": "Dental Consultation",
+      "id": "starter",
+      "name": "Starter plan",
       "aliases": [
-        "check-up",
-        "checkup",
-        "consultation"
+        "starter"
       ],
-      "price": 500,
-      "priceText": "₹500",
-      "durationMin": 20
+      "price": 3500,
+      "description": "Monthly plan for one website: monitoring and prioritised opportunities.",
+      "priceText": "₹3,500 per month"
     },
     {
-      "id": "whitening",
-      "name": "Teeth Whitening",
+      "id": "pro",
+      "name": "Pro plan",
       "aliases": [
-        "whitening",
-        "bleaching"
+        "pro"
       ],
-      "price": 8500,
-      "priceText": "₹8,500",
-      "durationMin": 60
+      "price": 8000,
+      "description": "Monthly plan with deeper scans, Search Console insights and weekly brief.",
+      "priceText": "₹8,000 per month"
     },
     {
-      "id": "filling",
-      "name": "Tooth-Coloured Filling",
+      "id": "strategy-call",
+      "name": "1:1 Growth Strategy Call",
       "aliases": [
-        "filling",
-        "composite filling"
+        "strategy call",
+        "consultation",
+        "1:1 call",
+        "call"
       ],
-      "price": 1800,
-      "priceText": "₹1,800",
-      "durationMin": 40
+      "price": 10000,
+      "description": "Video call with Kartikeya to walk through your audit and plan.",
+      "durationMin": 30,
+      "bookable": true,
+      "priceText": "₹10,000"
     },
     {
-      "id": "braces",
-      "name": "Braces / Orthodontic Treatment",
+      "id": "agency",
+      "name": "Agency plan",
       "aliases": [
-        "braces",
-        "aligners",
-        "orthodontic"
+        "agency",
+        "white-label",
+        "white label"
+      ],
+      "price": 25000,
+      "description": "Multi-site and white-label for agencies; quoted on request.",
+      "priceText": "₹25,000 per month"
+    },
+    {
+      "id": "done-for-you",
+      "name": "Done-for-you implementation",
+      "aliases": [
+        "implementation",
+        "done for you",
+        "custom project"
       ],
       "price": null,
-      "description": "Quoted after an orthodontic assessment."
-    },
-    {
-      "id": "implant",
-      "name": "Dental Implant",
-      "aliases": [
-        "implant",
-        "implants"
-      ],
-      "price": null,
-      "description": "Quoted after X-ray and consultation."
+      "description": "We implement the fixes for you; quoted after the audit.",
+      "bookable": true
     }
   ],
   "allowedAmounts": [],
-  "hours": "Monday to Saturday, 10 am to 8 pm (closed on Sunday)",
-  "address": "12 Example Road, Hazratganj, Lucknow (demo address)",
+  "hours": "Monday to Saturday, 10 am to 7 pm IST (replies within one working day)",
+  "address": "Online service, based in Lucknow, India",
   "policies": {
-    "booking": "Requests are confirmed by the front desk by phone within working hours.",
-    "payments": "Payment is taken at the clinic. The assistant never takes card details."
+    "booking": "Strategy calls are booked through the booking page; the assistant collects the request and Kartikeya confirms the slot by email.",
+    "payments": "Payments are taken only on the checkout page. The assistant never takes card details.",
+    "refunds": "See the refund policy on truesourceai.me."
   },
   "handoff": {
-    "phone": "+91 90000 00000",
-    "email": "frontdesk@example.com",
+    "email": "workmailkartikeya@gmail.com",
     "markers": [
+      "email us",
+      "write to",
       "our team will",
-      "team member",
-      "connect you",
-      "call us",
-      "whatsapp us",
-      "front desk",
-      "staff member",
-      "reach our team"
+      "kartikeya will",
+      "get back to you",
+      "reach out",
+      "contact page",
+      "linkedin",
+      "connect you"
     ]
   },
   "bookingFields": [
@@ -103,12 +110,12 @@
     "date",
     "time",
     "name",
-    "phone"
+    "email"
   ],
   "notOffered": [
-    "botox",
-    "laser hair removal",
-    "eye exams"
+    "paid ads management",
+    "social media management",
+    "guaranteed #1 Google ranking"
   ],
-  "generatedAt": "2026-11-09T08:22:17.333Z"
+  "generatedAt": "2026-11-09T09:24:41.066Z"
 }
