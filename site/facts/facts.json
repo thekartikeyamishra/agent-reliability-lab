@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "lumen-dental-demo",
+  "name": "Lumen Dental Studio",
+  "category": "dental clinic",
+  "website": "https://example.com/lumen-dental-demo",
+  "sourceUrls": [
+    "https://example.com/lumen-dental-demo"
+  ],
+  "verifiedOn": "2026-11-09",
+  "currency": "INR",
+  "services": [
+    {
+      "id": "cleaning",
+      "name": "Teeth Cleaning & Polishing",
+      "aliases": [
+        "cleaning",
+        "scaling"
+      ],
+      "price": 1200,
+      "priceText": "₹1,200",
+      "durationMin": 45
+    },
+    {
+      "id": "consultation",
+      "name": "Dental Consultation",
+      "aliases": [
+        "check-up",
+        "checkup",
+        "consultation"
+      ],
+      "price": 500,
+      "priceText": "₹500",
+      "durationMin": 20
+    },
+    {
+      "id": "whitening",
+      "name": "Teeth Whitening",
+      "aliases": [
+        "whitening",
+        "bleaching"
+      ],
+      "price": 8500,
+      "priceText": "₹8,500",
+      "durationMin": 60
+    },
+    {
+      "id": "filling",
+      "name": "Tooth-Coloured Filling",
+      "aliases": [
+        "filling",
+        "composite filling"
+      ],
+      "price": 1800,
+      "priceText": "₹1,800",
+      "durationMin": 40
+    },
+    {
+      "id": "braces",
+      "name": "Braces / Orthodontic Treatment",
+      "aliases": [
+        "braces",
+        "aligners",
+        "orthodontic"
+      ],
+      "price": null,
+      "description": "Quoted after an orthodontic assessment."
+    },
+    {
+      "id": "implant",
+      "name": "Dental Implant",
+      "aliases": [
+        "implant",
+        "implants"
+      ],
+      "price": null,
+      "description": "Quoted after X-ray and consultation."
+    }
+  ],
+  "allowedAmounts": [],
+  "hours": "Monday to Saturday, 10 am to 8 pm (closed on Sunday)",
+  "address": "12 Example Road, Hazratganj, Lucknow (demo address)",
+  "policies": {
+    "booking": "Requests are confirmed by the front desk by phone within working hours.",
+    "payments": "Payment is taken at the clinic. The assistant never takes card details."
+  },
+  "handoff": {
+    "phone": "+91 90000 00000",
+    "email": "frontdesk@example.com",
+    "markers": [
+      "our team will",
+      "team member",
+      "connect you",
+      "call us",
+      "whatsapp us",
+      "front desk",
+      "staff member",
+      "reach our team"
+    ]
+  },
+  "bookingFields": [
+    "service",
+    "date",
+    "time",
+    "name",
+    "phone"
+  ],
+  "notOffered": [
+    "botox",
+    "laser hair removal",
+    "eye exams"
+  ],
+  "generatedAt": "2026-11-09T08:22:17.333Z"
+}
