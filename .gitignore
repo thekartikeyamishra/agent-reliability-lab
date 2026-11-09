@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-test/
+out/
+runs/*
+!runs/.gitkeep
+data/business.json
+.env
+.env.*
+*.tmp
+*.log
+site/

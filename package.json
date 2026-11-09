@@ -1,0 +1,28 @@
+{
+  "name": "agent-reliability-lab",
+  "version": "1.0.0",
+  "description": "Evaluation harness for customer-facing AI agents: realistic test conversations, deterministic graders, before/after comparison and model comparison.",
+  "author": "Kartikeya Mishra",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "arl": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test \"dist-test/test/*.test.js\"",
+    "arl": "node dist/cli.js",
+    "validate": "node dist/cli.js validate",
+    "demo": "node dist/cli.js demo",
+    "clean": "node -e \"for (const d of ['dist','dist-test']) require('fs').rmSync(d,{recursive:true,force:true})\""
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}

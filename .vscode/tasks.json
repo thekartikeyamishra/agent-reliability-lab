@@ -1,0 +1,80 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ARL: build",
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "ARL: test",
+      "type": "npm",
+      "script": "test",
+      "group": "test"
+    },
+    {
+      "label": "ARL: demo",
+      "type": "shell",
+      "command": "node dist/cli.js demo",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: validate",
+      "type": "shell",
+      "command": "node dist/cli.js validate",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: record BEFORE",
+      "type": "shell",
+      "command": "node dist/cli.js record --run before",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: grade BEFORE",
+      "type": "shell",
+      "command": "node dist/cli.js run --run before --label \"Before (v1 brief)\"",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: record AFTER",
+      "type": "shell",
+      "command": "node dist/cli.js record --run after",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: grade AFTER",
+      "type": "shell",
+      "command": "node dist/cli.js run --run after --label \"After (v2 brief)\"",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: compare",
+      "type": "shell",
+      "command": "node dist/cli.js compare --before before --after after",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: build site",
+      "type": "shell",
+      "command": "node dist/cli.js site --before before --after after",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: preview site (demo)",
+      "type": "shell",
+      "command": "node dist/cli.js site --demo",
+      "dependsOn": "ARL: build"
+    },
+    {
+      "label": "ARL: check live site",
+      "type": "shell",
+      "command": "node dist/cli.js check-site",
+      "dependsOn": "ARL: build"
+    }
+  ]
+}

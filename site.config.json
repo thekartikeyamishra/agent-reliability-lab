@@ -1,0 +1,21 @@
+{
+  "domain": "evals.truesourceai.me",
+  "ownerName": "Kartikeya Mishra",
+  "ownerLinks": [
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/thekartikeyamishra"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/thekartikeyamishra"
+    },
+    {
+      "label": "Portfolio",
+      "href": "https://kartikeyamishra.info"
+    }
+  ],
+  "allowIndexing": false,
+  "firebaseSite": "",
+  "firebaseProject": ""
+}

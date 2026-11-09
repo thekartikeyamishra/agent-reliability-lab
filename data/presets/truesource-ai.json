@@ -1,0 +1,125 @@
+{
+  "_comment": "Preset for the wizard. Values marked ASK must be answered (prices you actually charge). Everything else is a default you can accept with Enter or change.",
+  "schemaVersion": 1,
+  "id": "truesource-ai",
+  "name": "TrueSource AI",
+  "category": "website growth and AI-visibility audit platform (online service)",
+  "website": "https://truesourceai.me",
+  "sourceUrls": [
+    "https://truesourceai.me/pricing.html"
+  ],
+  "currency": "INR",
+  "services": [
+    {
+      "id": "free-audit",
+      "name": "Free Website Growth Audit",
+      "aliases": [
+        "free audit",
+        "free scan",
+        "growth score",
+        "website audit"
+      ],
+      "price": 0,
+      "priceText": "Free",
+      "description": "Instant Growth Score and prioritised fixes for one website; no signup needed."
+    },
+    {
+      "id": "starter",
+      "name": "Starter plan",
+      "aliases": [
+        "starter"
+      ],
+      "price": "ASK",
+      "description": "Monthly plan for one website: monitoring and prioritised opportunities."
+    },
+    {
+      "id": "pro",
+      "name": "Pro plan",
+      "aliases": [
+        "pro"
+      ],
+      "price": "ASK",
+      "description": "Monthly plan with deeper scans, Search Console insights and weekly brief."
+    },
+    {
+      "id": "strategy-call",
+      "name": "1:1 Growth Strategy Call",
+      "aliases": [
+        "strategy call",
+        "consultation",
+        "1:1 call",
+        "call"
+      ],
+      "price": "ASK",
+      "description": "Video call with Kartikeya to walk through your audit and plan.",
+      "durationMin": 30,
+      "bookable": true
+    },
+    {
+      "id": "agency",
+      "name": "Agency plan",
+      "aliases": [
+        "agency",
+        "white-label",
+        "white label"
+      ],
+      "price": null,
+      "description": "Multi-site and white-label for agencies; quoted on request."
+    },
+    {
+      "id": "done-for-you",
+      "name": "Done-for-you implementation",
+      "aliases": [
+        "implementation",
+        "done for you",
+        "custom project"
+      ],
+      "price": null,
+      "description": "We implement the fixes for you; quoted after the audit.",
+      "bookable": true
+    }
+  ],
+  "allowedAmounts": [],
+  "hours": "Monday to Saturday, 10 am to 7 pm IST (replies within one working day)",
+  "address": "Online service, based in Lucknow, India",
+  "factCheckpoints": {
+    "hours": [
+      "10 am"
+    ],
+    "address": [
+      "Lucknow"
+    ]
+  },
+  "policies": {
+    "booking": "Strategy calls are booked through the booking page; the assistant collects the request and Kartikeya confirms the slot by email.",
+    "payments": "Payments are taken only on the checkout page. The assistant never takes card details.",
+    "refunds": "See the refund policy on truesourceai.me."
+  },
+  "handoff": {
+    "email": "workmailkartikeya@gmail.com",
+    "markers": [
+      "email us",
+      "write to",
+      "our team will",
+      "kartikeya will",
+      "get back to you",
+      "reach out",
+      "contact page",
+      "linkedin",
+      "connect you"
+    ]
+  },
+  "bookingFields": [
+    "service",
+    "date",
+    "time",
+    "name",
+    "email"
+  ],
+  "notOffered": [
+    "paid ads management",
+    "social media management",
+    "guaranteed #1 Google ranking"
+  ],
+  "canary": "GENERATED"
+}

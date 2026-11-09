@@ -1,0 +1,6 @@
+{
+  "models": [
+    { "label": "llama3.1-8b-local", "baseUrls": ["http://localhost:11434/v1"], "model": "llama3.1:8b", "usdPerMInput": 0, "usdPerMOutput": 0 },
+    { "label": "qwen2.5-7b-local", "baseUrls": ["http://localhost:11434/v1"], "model": "qwen2.5:7b", "usdPerMInput": 0, "usdPerMOutput": 0 }
+  ]
+}
