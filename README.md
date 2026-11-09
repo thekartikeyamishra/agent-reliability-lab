@@ -17,7 +17,7 @@ An evaluation harness for customer-facing AI agents, built for the **Agentplace 
 ```powershell
 # Node.js 22 LTS required: https://nodejs.org
 cd agent-reliability-lab
-.\scripts\setup.ps1          # install, build, run tests, run the demo, create data\business.json
+.\scripts\setup.ps1          # install, build, run tests, run the demo
 ```
 
 Or step by step: `npm ci` → `npm run build` → `npm test` → `npm run demo`.
@@ -30,7 +30,7 @@ All commands are also in **VS Code → Terminal → Run Task → "ARL: …"**.
 The full walkthrough is in **[docs/SUBMISSION-GUIDE.md](docs/SUBMISSION-GUIDE.md)**. In short:
 
 ```powershell
-node dist/cli.js init                         # 1. create data\business.json, then fill it with REAL facts
+node dist/cli.js wizard --preset truesource-ai  # 1. your real business facts → then: facts-page, publish it
 node dist/cli.js validate
 node dist/cli.js brief --version v1           # 2. out\brief.v1.md → paste into the Agentplace Builder, publish
 node dist/cli.js record --run before --agent-url https://…   # 3. record 33 conversations
@@ -49,7 +49,7 @@ node dist/cli.js site --agent-url https://…                 # 6. build the sit
 | `wizard [--preset truesource-ai]` | Guided, validated setup of your business facts (prices, contacts, what you don't offer) |
 | `facts-page` | Public pricing/facts page plus `facts.json`, generated from the same file the agent and graders use |
 | `env` / `ping` | Show loaded settings (secrets hidden) / one tiny request to check a model endpoint |
-| `init` | Creates `data/business.json` (with a fresh canary) and `agent/changes.json` |
+| `init [--demo]` | Creates `agent/changes.json`; `--demo` makes a fictional practice `data/business.json` |
 | `validate` | Validates business facts, test set and both briefs |
 | `knowledge` / `brief --version v1\|v2` / `cases` | Writes the knowledge text, the Builder briefs and a readable test set to `out/` |
 | `record --run <id>` | Interactive, resumable recording from a published agent |

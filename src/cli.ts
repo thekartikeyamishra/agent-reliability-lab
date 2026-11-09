@@ -11,7 +11,7 @@ import { HttpAdapter } from './adapters/http.js';
 import { OpenAICompatibleAdapter, openAIConfigFromEnv } from './adapters/openai.js';
 import type { AgentAdapter } from './adapters/types.js';
 import { knowledgeMarkdown, renderBrief } from './knowledge.js';
-import { buildSite, checkLiveSite } from './site.js';
+import { buildSite, checkLiveSite, rootVercelJson } from './site.js';
 import { runWizard } from './wizard.js';
 import { writeFactsPage } from './facts-page.js';
 import { emailText, preflight, printPdf } from './submission.js';
@@ -70,8 +70,16 @@ const num = (f: Flags, k: string, d: number): number => {
 
 function loadBusiness(f: Flags): BusinessFacts {
   const p = resolve(ROOT, str(f, 'business', 'data/business.json')!);
-  if (!existsSync(p)) throw new UserError(`No business facts at ${p}. Run "npm run arl -- init" first, then fill data/business.json from the business's public website.`);
+  if (!existsSync(p)) throw new UserError(`No business facts at ${p}. Run: node dist/cli.js wizard --preset truesource-ai`);
   return validateBusiness(readJson(p));
+}
+
+/** Stop real-world actions (publishing facts, recording, building the agent) from running on the fictional demo. */
+function requireReal(b: BusinessFacts, f: Flags, action: string): void {
+  if (!b.isDemo || f['allow-demo'] === true) return;
+  throw new UserError(`${action} needs your REAL business facts, but data/business.json is still the fictional demo (${b.name}, ${b.sourceUrls[0]}).
+  Fix: node dist/cli.js wizard --preset truesource-ai
+  (example.com is a reserved placeholder domain — it is not your site.)`);
 }
 
 function loadCases(f: Flags, b: BusinessFacts): { cases: TestCase[]; hash: string } {
@@ -178,7 +186,7 @@ async function cmdRun(f: Flags): Promise<RunResult> {
 
 async function cmdRecord(f: Flags): Promise<void> {
   const b = loadBusiness(f);
-  if (b.isDemo) console.warn('⚠️  You are recording against the DEMO business facts. Fill data/business.json with your real business first.');
+  requireReal(b, f, 'record');
   const { cases, hash } = loadCases(f, b);
   const dir = runDir(RUNS, str(f, 'run') ?? (() => { throw new UserError('--run <id> is required'); })());
   const path = join(dir, 'transcript.json');
@@ -307,9 +315,11 @@ async function cmdSite(f: Flags): Promise<void> {
     firebaseSite: cfg.firebaseSite || undefined, firebaseProject: cfg.firebaseProject || undefined,
   });
   const factFiles = writeFactsPage(b, join(resolve(outDir), 'facts'));
+  if (outDir === 'site') writeFileAtomic(join(ROOT, 'vercel.json'), rootVercelJson(f.index === true || cfg.allowIndexing === true));
   console.log(`Included the business facts page the agent was graded against: facts/${factFiles[0]}`);
   console.log(`\nBuilt ${files.length + factFiles.length} files in ${resolve(outDir)}${synthetic ? ' (SYNTHETIC PREVIEW — do not deploy)' : ''}`);
-  console.log(`Preview: open ${join(resolve(outDir), 'index.html')} in your browser. Deploy: docs/DOMAIN-SETUP.md`);
+  console.log(`Preview: open ${join(resolve(outDir), 'index.html')} in your browser.`);
+  console.log('Deploy (Git-connected Vercel): git add site vercel.json ; git commit -m "Publish site" ; git push   — see docs/DOMAIN-SETUP.md');
 }
 
 async function cmdCheckSite(f: Flags): Promise<void> {
@@ -346,10 +356,12 @@ async function cmdWizard(f: Flags): Promise<void> {
 
 function cmdFactsPage(f: Flags): void {
   const b = loadBusiness(f);
+  requireReal(b, f, 'facts-page');
   const out = join(OUT, 'facts');
   const files = writeFactsPage(b, out);
   console.log(`Wrote ${files.map((x) => join(out, x)).join(' and ')}`);
-  console.log(`Publish both so that ${b.sourceUrls[0]} serves the page (see docs/NO-BUSINESS-PLAN.md).`);
+  console.log(`\nNext: copy BOTH files into the public\\ folder of your website project (not into this project's src\\),`);
+  console.log(`deploy it, then open ${b.sourceUrls[0]} in a private window and check every price. See docs/NO-BUSINESS-PLAN.md, Step 3.`);
 }
 
 function loadSubmissionContext(f: Flags) {
@@ -417,21 +429,22 @@ async function cmdPack(f: Flags): Promise<void> {
   console.log(`\nPack written to ${out}${pdf ? ` (incl. ${pdfName})` : ' — no Chrome/Edge found for the PDF; see README.txt'}`);
 }
 
-function cmdInit(): void {
+function cmdInit(f: Flags): void {
   const target = join(ROOT, 'data', 'business.json');
-  if (existsSync(target)) {
-    console.log('data/business.json already exists — leaving it untouched.');
-  } else {
+  const ch = join(ROOT, 'agent', 'changes.json');
+  if (!existsSync(ch)) writeJson(ch, []);
+  if (f.demo === true) {
+    if (existsSync(target)) throw new UserError('data/business.json already exists — delete it first if you really want the demo copy.');
     copyFileSync(join(ROOT, 'data', 'business.example.json'), target);
     const b = readJson<BusinessFacts>(target);
     b.canary = newCanary();
-    b.isDemo = true; // stays true until you replace the demo facts with real ones
+    b.isDemo = true;
     writeJson(target, b);
-    console.log('Created data/business.json from the demo. Replace EVERY fact with the real business, copied from its public pages,');
-    console.log('list those pages in sourceUrls, set verifiedOn, and set "isDemo": false.');
+    console.log('Created a DEMO data/business.json (fictional, for practice only).');
+    return;
   }
-  const ch = join(ROOT, 'agent', 'changes.json');
-  if (!existsSync(ch)) writeJson(ch, []);
+  console.log(existsSync(target) ? 'data/business.json exists.' : 'No business facts yet.');
+  console.log('Set up your real business with:  node dist/cli.js wizard --preset truesource-ai');
 }
 
 function newCanary(): string {
@@ -481,7 +494,7 @@ const HELP = `Agent Reliability Lab ${TOOL_VERSION} — evaluation harness for c
   wizard [--preset truesource-ai] [--force]
                                guided setup of data/business.json (use your own product as the business)
   facts-page                   write out/facts/pricing.html + facts.json — the public page your agent's facts come from
-  init                         create data/business.json (+ fresh canary) and agent/changes.json
+  init [--demo]                create agent/changes.json (--demo: fictional practice business.json)
   canary                       print a new random canary code
   validate                     check business facts, test set and briefs
   knowledge                    write out/knowledge.md (paste into your agent's knowledge)
@@ -512,7 +525,7 @@ async function main(): Promise<void> {
   const { cmd, flags } = parseArgs(process.argv.slice(2));
   switch (cmd) {
     case 'init':
-      return cmdInit();
+      return cmdInit(flags);
     case 'canary':
       return console.log(newCanary());
     case 'validate': {
@@ -533,7 +546,9 @@ async function main(): Promise<void> {
       const v = str(flags, 'version', 'v2')!;
       if (!/^v\d+$/.test(v)) throw new UserError('--version must look like v1 or v2');
       const p = join(OUT, `brief.${v}.md`);
-      writeFileAtomic(p, renderBrief(readText(join(ROOT, 'agent', `brief.${v}.md`)), loadBusiness(flags)));
+      const bb = loadBusiness(flags);
+      if (bb.isDemo) console.warn('⚠️  This brief uses the fictional DEMO facts — do not paste it into Agentplace. Run the wizard first.');
+      writeFileAtomic(p, renderBrief(readText(join(ROOT, 'agent', `brief.${v}.md`)), bb));
       return console.log(`Wrote ${p}`);
     }
     case 'cases': {

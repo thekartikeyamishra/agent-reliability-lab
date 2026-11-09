@@ -7,6 +7,9 @@ runs/*
 data/business.json
 .env
 .env.*
+!.env.example
 *.tmp
 *.log
-site/
+site/.vercel/
+site/.firebase/
+.vercel/

@@ -21,15 +21,27 @@ If you want search engines to index it, add `--index` or set `"allowIndexing": t
 
 ## 2. Deploy: pick ONE host (all free)
 
-### Option A: Vercel (recommended if truesourceai.me is already on Vercel)
+### Option A: Vercel, connected to your GitHub repo (recommended)
+Vercel does **not** build anything. The site is built on your PC from your private runs and committed in `site\`. The root `vercel.json`, written by the `site` command, tells Vercel to skip install and build, check the folder (`scripts/vercel-check.mjs`), serve `site\`, and add the security headers.
+
 ```powershell
-cd site
-npx vercel@latest login
-npx vercel@latest --prod          # project name: agent-evals; it picks up site\vercel.json (headers)
-cd ..
+node dist/cli.js site --agent-url https://YOUR-AGENT-LINK     # or --demo for a labelled preview
+git add site vercel.json
+git commit -m "Publish evidence site"
+git push
 ```
-Then go to **Vercel dashboard → agent-evals → Settings → Domains → Add `evals.truesourceai.me`**.
-Vercel shows the exact DNS record to add. If the domain's nameservers are already Vercel's, it is automatic.
+In **Vercel → your project → Settings → Build and Deployment**:
+- Framework Preset: **Other**. Root Directory: **./** (empty).
+- Build Command, Output Directory and Install Command: leave the **override toggles OFF**. `vercel.json` sets them.
+- Node.js Version: **22.x**.
+
+Then go to **Settings → Domains → Add `evals.truesourceai.me`**.
+
+To update the site later, rebuild it, commit, and push. Every push redeploys.
+
+If a deploy fails with "site/index.html not found", you pushed before building or committing `site\`. Run the three commands above.
+
+**Alternative: no Git.** Run `cd site` then `npx vercel@latest --prod`, which uploads the folder directly using `site\vercel.json`.
 
 ### Option B: Cloudflare Pages (unlimited bandwidth on the free plan)
 ```powershell
@@ -85,7 +97,7 @@ Then open it on your phone in a private tab, and run a free scan at securityhead
 |---|---|
 | `check-site` says DNS / fetch failed | Record not propagated yet, or a typo in Host (it must be `evals`, not `evals.truesourceai.me` on most registrars) |
 | SSL certificate error | Wait 5–30 minutes after DNS resolves. Check CAA records. Remove any conflicting A/AAAA record on `evals`. |
-| Headers missing | Vercel: deploy from inside `site\` so `vercel.json` is the project root. Cloudflare: `_headers` must be in the deployed folder root. Firebase: deploy from `site\`. |
+| Headers missing | Vercel (Git): the root `vercel.json` must be committed, with no dashboard overrides. Vercel (CLI): deploy from inside `site\`. Cloudflare: `_headers` must be in the deployed folder root. Firebase: deploy from `site\`. |
 | http does not redirect | Turn on "Always Use HTTPS" (Cloudflare) or the host's force-HTTPS setting (Vercel and Firebase do it automatically) |
 | Old content showing | Hard refresh (Ctrl+F5). CSS is cached for one hour. |
 

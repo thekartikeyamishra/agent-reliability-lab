@@ -283,6 +283,27 @@ export function buildSite(o: SiteOptions): string[] {
   return files.map((f) => relative(out, f));
 }
 
+/**
+ * vercel.json for a Git-connected Vercel project whose root is this repository: no install/build on Vercel,
+ * serve the committed site/ folder with the same security headers.
+ */
+export function rootVercelJson(allowIndexing: boolean): string {
+  const headerList = Object.entries(SECURITY_HEADERS).map(([key, value]) => ({ key, value }));
+  return JSON.stringify({
+    $schema: 'https://openapi.vercel.sh/vercel.json',
+    framework: null,
+    installCommand: 'echo "No install needed: the site is prebuilt in site/"',
+    buildCommand: 'node scripts/vercel-check.mjs',
+    outputDirectory: 'site',
+    cleanUrls: false,
+    trailingSlash: false,
+    headers: [
+      { source: '/(.*)', headers: [...headerList, ...(allowIndexing ? [] : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }])] },
+      { source: '/(.*)\\.(css|json|csv)', headers: [{ key: 'Cache-Control', value: 'public, max-age=3600' }] },
+    ],
+  }, null, 2) + '\n';
+}
+
 /** Post-deploy verification: HTTPS, redirects, status codes and security headers on the live domain. */
 export async function checkLiveSite(domain: string): Promise<{ ok: boolean; lines: string[] }> {
   const lines: string[] = [];

@@ -10,7 +10,7 @@
     "arl": "dist/cli.js"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.x"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -19,7 +19,8 @@
     "arl": "node dist/cli.js",
     "validate": "node dist/cli.js validate",
     "demo": "node dist/cli.js demo",
-    "clean": "node -e \"for (const d of ['dist','dist-test']) require('fs').rmSync(d,{recursive:true,force:true})\""
+    "clean": "node -e \"for (const d of ['dist','dist-test']) require('fs').rmSync(d,{recursive:true,force:true})\"",
+    "vercel-check": "node scripts/vercel-check.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

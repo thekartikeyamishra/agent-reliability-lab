@@ -113,3 +113,14 @@ test('preflight blocks demo facts and missing runs; email has every link', async
   for (const p of ['Subject: Application: AI Engineer', 'nikita@agentplace.io', '/reviewer.html', '/comparison.html', 'The knowledge change mattered.']) assert.ok(mail.includes(p), p);
   assert.equal(extractSection('# A\n\n## Which changes mattered\n\nX\n\n## Next\nY', 'which changes mattered'), 'X');
 });
+
+test('root vercel.json: no build on Vercel, serves site/, keeps every security header', async () => {
+  const { rootVercelJson } = await import('../src/site.js');
+  const v = JSON.parse(rootVercelJson(false));
+  assert.equal(v.outputDirectory, 'site');
+  assert.equal(v.framework, null);
+  assert.match(v.buildCommand, /vercel-check/);
+  const keys = v.headers[0].headers.map((h: { key: string }) => h.key);
+  for (const k of Object.keys(SECURITY_HEADERS)) assert.ok(keys.includes(k), k);
+  assert.ok(keys.includes('X-Robots-Tag'));
+});

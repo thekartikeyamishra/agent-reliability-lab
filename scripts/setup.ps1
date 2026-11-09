@@ -7,4 +7,4 @@ npm run build
 npm test
 node dist/cli.js demo
 node dist/cli.js init
-Write-Host "`nSetup complete. Next: fill data\business.json with your real business (see docs\SUBMISSION-GUIDE.md)." -ForegroundColor Green
+Write-Host "`nSetup complete. Next:  node dist/cli.js wizard --preset truesource-ai   (see docs\NO-BUSINESS-PLAN.md)" -ForegroundColor Green

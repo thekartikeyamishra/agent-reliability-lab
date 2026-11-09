@@ -25,10 +25,10 @@ Pick a real business that meets all of these:
 ## Step 1: Fill in the facts (about 30 minutes)
 
 ```powershell
-node dist/cli.js init
-code data\business.json
+node dist/cli.js wizard                 # or: wizard --preset truesource-ai (your own product)
 ```
 
+The wizard asks for each fact and validates it. To edit afterwards, open `data\business.json`:
 - Replace **every** demo value. Copy prices exactly as published (`price` = number, `priceText` = as written).
 - `price: null` for services without a published price.
 - `notOffered`: 3 plausible things the business does **not** do. Customers will ask for these.
